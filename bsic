@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Sweetheart</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      color: #fff;
+      text-align: center;
+    }
+    .countdown, .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .countdown {
+      font-size: 5em;
+      font-weight: bold;
+    }
+    .message {
+      display: none;
+      font-size: 2em;
+      line-height: 1.5;
+      max-width: 700px;
+    }
+    .kiss {
+      font-size: 3em;
+      margin-top: 20px;
+      animation: kiss 1s infinite alternate;
+    }
+    @keyframes kiss {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+  <div class="countdown" id="countdown">3</div>
+  <div class="message" id="message">
+    <h1>🎉 Happy Birthday Sweetheart 🎉</h1>
+    <p>
+      Today is all about celebrating you—the most amazing person in my life.  
+      These past 6 months together have been the happiest of my life, and I’m so grateful for every smile, every laugh, and every moment we’ve shared.  
+      You make my world brighter, and I can’t wait for all the adventures ahead with you.  
+    </p>
+    <p class="kiss">💋 Sending you a big kiss 💋</p>
+  </div>
+
+  <script>
+    let countdown = document.getElementById('countdown');
+    let message = document.getElementById('message');
+    let numbers = ["3", "2", "1", "Go!"];
+    let i = 0;
+
+    function showCountdown() {
+      if (i < numbers.length) {
+        countdown.textContent = numbers[i];
+        i++;
+        setTimeout(showCountdown, 1000);
+      } else {
+        countdown.style.display = "none";
+        message.style.display = "block";
+      }
+    }
+
+    showCountdown();
+  </script>
+</body>
+</html>
