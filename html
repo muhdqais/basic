@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Library Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<style>
+body {
+    margin:0;
+    font-family: Arial;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+}
+
+/* LOGIN */
+#login {
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.box {
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+}
+input {
+    padding:10px;
+    margin:10px;
+    width:220px;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+button {
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:#667eea;
+    color:white;
+}
+
+/* APP */
+#app { display:none; }
+
+.header {
+    background:#5a67d8;
+    padding:15px;
+    text-align:center;
+}
+
+.card {
+    background:white;
+    color:black;
+    margin:10px;
+    padding:10px;
+    border-radius:15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+    <div class="box">
+        <h2>Login</h2>
+        <input id="email" placeholder="Username (email)"><br>
+        <input id="password" type="password" placeholder="Password"><br>
+        <button onclick="login()">Login</button>
+        <button onclick="signup()">Sign Up</button>
+    </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+    <div class="header">
+        <h2>Library Dashboard</h2>
+    </div>
+
+    <div id="list"></div>
+</div>
+
+<script>
+
+/* 🔥 FIREBASE CONFIG */
+const firebaseConfig = {
+    apiKey: "YOUR_KEY",
+    authDomain: "YOUR_DOMAIN",
+    projectId: "YOUR_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* LOGIN */
+function login(){
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+    .then(()=>{
+        startApp();
+    })
+    .catch(err=>alert(err.message));
+}
+
+/* SIGNUP */
+function signup(){
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+    .then(()=>{
+        alert("Account created");
+    })
+    .catch(err=>alert(err.message));
+}
+
+/* LOAD APP */
+function startApp(){
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    loadBooks();
+}
+
+/* FETCH BOOKS FROM FIRESTORE */
+function loadBooks(){
+    db.collection("books").get().then(snapshot=>{
+        let out="";
+        snapshot.forEach(doc=>{
+            let b=doc.data();
+            out+=`
+            <div class="card">
+                <b>${b.name}</b><br>
+                Branch: ${b.branch}<br>
+                Available: ${b.available}
+            </div>`;
+        });
+        document.getElementById("list").innerHTML=out;
+    });
+}
+
+</script>
+
+</body>
+</html> 
+
+#Divide this code into threee  html css javascrpt so tht i can run in html creator
